@@ -1,4 +1,7 @@
 
+
+const fs = require('fs');
+
 const express = require ('express')
 
 const server = express()
@@ -68,3 +71,22 @@ server.post('/koders', (request,response) => {
 
 // 
  
+
+server.post('/koders', (request,response) =>{
+    const name = request.body.name
+    const gender = request.body.gender
+
+    const newKoder = { name, gender }
+
+    const content = fs.readFileSync('koders.json', 'utf8')
+    const json = JSON.parse(content)
+
+    json.koders.push(newKoder)
+
+    fs.writeFileSync('koders.json', JSON.stringify(json, null, 2), 'utf8')
+
+    response.json({
+        success: true
+    })
+})
+

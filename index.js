@@ -3,21 +3,22 @@
   // GET /Koders -> reegresa un json con una lista de koders
   La lista de koders viene de un archivo
 */
-const fs = require('fs');
-
 const express = require ('express')
+
+const kodersRouter = require('./routers/koders')
+const mentorsRouter = require('./routers/mentors')
+
 const server = express()
 
 // middleware
 server.use(express.json())
+server.use('/koders', kodersRouter)
+server.use('/mentors', mentorsRouter)
 
-
-server.get('/koders', (request, response) => {
-    fs.readFile('koders.json', 'utf-8', (error, data) => {
-        if (error) {
-            console.error('Algo salio mal: ', error);
-        }
-        response.json(JSON.parse(data))
+server.get('/', (request,response)=>{
+    response.json({
+        success: true,
+        message: '11G apiV1'
     })
 })
 
